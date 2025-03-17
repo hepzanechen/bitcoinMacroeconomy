@@ -37,21 +37,32 @@ This analysis utilizes daily OHLC (Open, High, Low, Close) price data from 2018/
 # Daily Price Behavior of Bitcoin and Traditional Asset
 The log return is calculated using the natural logarithm of the ratio between consecutive closing prices. The formula is:
 
-\[ r_t = \ln\left(\frac{P_t}{P_{t-1}}\right) \]
+$$ r_t = \ln\left(\frac{P_t}{P_{t-1}}\right) $$
 
 Where:
-- \( r_t \) is the log return at time t
-- \( P_t \) is the closing price at time t
-- \( P_{t-1} \) is the closing price at the previous time period (t-1)
-- \( \ln \) is the natural logarithm function
+- $ r_t $ is the log return at time t
+- $ P_t $ is the closing price at time t
+- $ P_{t-1} $ is the closing price at the previous time period (t-1)
+- $ \ln $ is the natural logarithm function
 
-Here our period is one day, interested reader can visit the source code at .This calculation provides a continuous compounding return measure that is symmetric and additive over time, making it particularly useful for financial analysis and modeling.
+Here our period is one day.
+We also estimated intraday normalized volatility for each asset, calculated as the daily high-low range divided by the opening price. The formula is:
+
+$$ v_t = \frac{H_t - L_t}{O_t} $$
+
+Where:
+- $ v_t $ is the normalized intraday volatility at time t
+- $ H_t $ is the daily high price
+- $ L_t $ is the daily low price
+- $ O_t $ is the daily opening price
+
+ Interested readers can visit the source code at https://github.com/hepzanechen/bitcoinMacroeconomy for more calculation details. This calculation provides a continuous compounding return measure that is symmetric and additive over time, making it particularly useful for financial analysis and modeling.
 
 ## Price and Return Visualizations
-![Asset Prices Plot](./assets_prices.png)
-![Daily Returns Plot](./assets_returns.png)
+![Asset Prices Plot](./plots/assets_prices.png)
+![Daily Returns Plot](./plots/assets_returns.png)
 
-For interactive visualizations, please see [all_plots_interactive.html](./all_plots_interactive.html)
+For interactive visualizations, please see [all_plots_interactive.html](./plots/all_plots_interactive.html)
 
 
 ## Asset Return and Volatility Distributions
@@ -74,4 +85,15 @@ For interactive visualizations, please see [all_plots_interactive.html](./all_pl
 | skewness |              -1.1615 |                      2.8224 |           -0.3224 |                   2.9579 |             -0.5966 |                     2.1172 |
 | kurtosis |              17.2005 |                     16.0629 |            5.5146 |                  16.0317 |              9.9513 |                     7.6063 |
 
-![Asset Distributions](./assets_distributions.png)
+![Asset Distributions](./plots/assets_distributions.png)
+*<a id="figure1">Figure 1</a>: Asset log return distributions and boxplots alongside normalized intraday volatility distributions and boxplots for Bitcoin, Gold, and Nasdaq*
+
+As shown in [Figure 1](#figure1), Bitcoin demonstrates the highest volatility among the three assets, with significant negative skewness and fat tails. This suggests a greater likelihood of extreme price movements compared to Gold and Nasdaq. Bitcoin's volatility patterns align with the unique characteristics of cryptocurrency markets, including 24/7 trading, lower liquidity, and heightened sensitivity to news events.
+
+In contrast, Gold maintains the lowest overall volatility, consistent with its status as a stable "safe haven" asset. However, it still experiences occasional sharp volatility spikes as can be seen by Boxplot. Those spikes are at periods of market stress, such as major geopolitical or macroeconomic events. 
+
+Nasdaq exhibits intermediate characteristics, with moderate volatility and negative skewness. All three assets display non-normal return distributions with heavy tails, indicating that traditional models based on normal distribution assumptions may significantly underestimate risk, particularly for Bitcoin. Investors should carefully account for these fat-tailed distributions when developing portfolio diversification strategies, managing risk, and implementing hedging approaches. Ignoring the potential for tail events could result in a substantial underestimation of downside risk exposure.
+
+
+### Black Swan, Extreme Market Conditons Exploration
+As showed in 
